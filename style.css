@@ -1718,6 +1718,16 @@ h1 em {
     flex-shrink: 0;
     margin-right: 6px;
   }
+  /* Mobile Fix for Staff/Team Grid */
+  @media screen and (max-width: 768px) {
+    .staff-grid, 
+    .team-grid, 
+    .members-grid {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+     }
+  }
 }
 
 
