@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Diversion SMP — Minecraft Bedrock Community</title>
+  <meta name="description" content="Diversion SMP – English-speaking Minecraft Bedrock SMP. Join the community on Discord." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <!-- Noise overlay -->
+  <div class="noise" aria-hidden="true"></div>
+
+  <!-- Layout wrapper for sticky footer -->
+  <div id="root">
+    <div id="main-content">
+
+  <!-- Header -->
+
+
+
+  <header class="site-header">
+    <div class="container header-inner">
+<a class="logo" href="#">
+        <img class="logo-img" src="./assets/diversion-logo.png" alt="Diversion SMP" width="32" height="32" loading="eager" decoding="async">
+        <span>Diversion SMP</span>
+      </a>
+
+      <nav class="nav-tabs">
+        <button class="tab-btn" data-tab="home">Home</button>
+
+        <button class="tab-btn" data-tab="rules">Rules</button>
+        <button class="tab-btn" data-tab="faq">FAQ</button>
+        <button class="tab-btn" data-tab="staff">Staff</button>
+        <button class="tab-btn" data-tab="events">Events</button>
+      </nav>
+
+      <!-- Desktop Discord link -->
+      <a class="btn btn-primary discord-desktop" href="https://discord.gg/R3Pf36DtY" target="_blank" rel="noreferrer">
+        <svg class="discord-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+        </svg>
+        Join Discord
+      </a>
+
+
+
+      <!-- Mobile menu toggle -->
+      <button class="mobile-menu-btn" type="button" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Mobile menu overlay -->
+      <nav class="mobile-menu" role="navigation" aria-label="Main navigation">
+        <div class="mobile-menu-inner">
+          <button class="mobile-menu-close" type="button" aria-label="Close menu">x</button>
+          <div class="mobile-menu-tabs">
+            <button class="tab-btn mobile-tab-btn" data-tab="home">Home</button>
+
+            <button class="tab-btn mobile-tab-btn" data-tab="rules">Rules</button>
+            <button class="tab-btn mobile-tab-btn" data-tab="faq">FAQ</button>
+            <button class="tab-btn mobile-tab-btn" data-tab="staff">Staff</button>
+            <button class="tab-btn mobile-tab-btn" data-tab="events">Events</button>
+          </div>
+          <div class="mobile-menu-discord">
+            <a class="btn btn-primary discord-mobile" href="https://discord.gg/R3Pf36DtY" target="_blank" rel="noreferrer">
+              <svg class="discord-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+              </svg>
+              Join Discord
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+
+  
+  <div id="home-tab" class="tab-content active">
+
+    <!-- Hero + Stats only for Home -->
+    <section class="hero">
+      <div class="hero-bg-grid" aria-hidden="true"></div>
+      <div class="orb orb1" aria-hidden="true"></div>
+      <div class="orb orb2" aria-hidden="true"></div>
+
+      <div class="container hero-inner">
+        <div class="hero-copy reveal">
+          <div class="pill">
+
+            Bedrock Edition · English community
+          </div>
+
+          <h1>
+            Your next<br>
+            <em>Minecraft</em><br>
+            home.
+          </h1>
+
+          <p class="subhead">
+            Diversion SMP is a community-first Bedrock server where you build, explore,
+            and create memories together — no drama, just good survival.
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-large" href="https://discord.gg/R3Pf36DtY" target="_blank" rel="noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+              </svg>
+              Join the Discord
+            </a>
+
+            <button class="btn btn-ghost btn-large" id="copyDiscord" type="button">
+              Copy invite link
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-card reveal reveal-delay" aria-hidden="true">
+          <div class="card-header">
+            <div class="card-dots">
+              <span class="dot r"></span>
+              <span class="dot y"></span>
+              <span class="dot g"></span>
+            </div>
+            <span class="card-label">diversion-smp</span>
+          </div>
+
+          <div class="card-body">
+            <div class="server-info">
+              <div class="info-row">
+                <span class="info-label">Edition</span>
+                <span class="info-val tag-orange">Bedrock 1.21</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Platform</span>
+                <span class="info-val">PC · Console · Mobile</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Language</span>
+                <span class="info-val">🇬🇧 English</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Type</span>
+                <span class="info-val">Scripted Survival SMP</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Status</span>
+                <span class="info-val" id="server-status">Checking…</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Players</span>
+                <span class="info-val" id="server-players">—</span>
+              </div>
+            </div>
+
+            <div class="card-divider"></div>
+
+            <ul class="checklist">
+              <li>
+                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/>
+                  <path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Community-first, no pay-to-win
+              </li>
+              <li>
+                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/>
+                  <path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Regular events & build challenges
+              </li>
+              <li>
+                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/>
+                  <path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Active Discord with friendly players
+              </li>
+              <li>
+                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/>
+                  <path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Cross-platform — everyone welcome
+              </li>
+            </ul>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="container">
+        <div class="stats-bar reveal">
+          <div class="stat-item">
+            <span class="stat-value">SMP</span>
+            <span class="stat-label">Scripted Survival Multiplayer</span>
+          </div>
+
+          <div class="stat-sep"></div>
+
+          <div class="stat-item">
+            <span class="stat-value">Bedrock</span>
+            <span class="stat-label">Edition</span>
+          </div>
+
+          <div class="stat-sep"></div>
+
+          <div class="stat-item">
+            <span class="stat-value">24/7</span>
+            <span class="stat-label">Always online</span>
+          </div>
+
+          <div class="stat-sep"></div>
+
+          <div class="stat-item">
+            <span class="stat-value">EN</span>
+            <span class="stat-label">English community</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section about-section" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-copy reveal">
+            <p class="section-eyebrow">About the server</p>
+            <h2>Built for players,<br>not numbers.</h2>
+            <p>Diversion SMP started as a place where Bedrock players could find a proper home — a community that actually communicates, collaborates, and has fun. No pay-to-win shop, no inflated player counts. Just survival Minecraft done right.</p>
+            <p>Whether you're a builder, a cave diver, a redstone nerd, or just starting out — there's a spot for you here.</p>
+
+
+          </div>
+
+          <div class="about-panel reveal reveal-delay">
+            <div class="panel-links panel-links--about"></div>
+
+            <div class="panel-block">
+              <h4>Quick info</h4>
+
+              <div class="info-list">
+                <div class="info-row-2"><span>Edition</span><strong>Minecraft Bedrock</strong></div>
+                <div class="info-row-2"><span>Version</span><strong>1.26.x</strong></div>
+                <div class="info-row-2"><span>Type</span><strong>Scripted Survival SMP</strong></div>
+                <div class="info-row-2"><span>Language</span><strong>English</strong></div>
+                <div class="info-row-2"><span>Platforms</span><strong>All Bedrock devices</strong></div>
+                <div class="info-row-2"><span>Server Ip</span><strong>Cooming soon</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-block reveal">
+          <div class="cta-orb" aria-hidden="true"></div>
+
+          <p class="section-eyebrow">Ready?</p>
+          <h2>Join Diversion SMP today.</h2>
+          <p>Hop into the Discord, introduce yourself, and start your next adventure.</p>
+
+          <div class="cta-actions">
+            <a class="btn btn-primary btn-large" href="https://discord.gg/R3Pf36DtY" target="_blank" rel="noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+              </svg>
+              Open Discord
+            </a>
+
+            <button class="btn btn-ghost btn-large" id="copyDiscord2" type="button">
+              Copy invite
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    </main>
+  </div>
+
+  </div>
+
+  <!-- Rules Tab -->
+  <div id="rules-tab" class="tab-content">
+    <section class="rules-section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow">Server Rules</p>
+          <h2>Diversion Rules</h2>
+        </div>
+        
+        <div class="rules-grid">
+          <article class="rules-card rules-card--discord">
+            <h3>
+              <span class="rules-icon" aria-hidden="true">✕</span>
+              Discord Rules (NOs)
+            </h3>
+            <ul class="rules-list">
+              <li>No Racism, and Homophobia</li>
+              <li>No Sexuality or Religion Hating</li>
+              <li>No Scamming or Self-Advertisement</li>
+              <li>No Discrimination or Death Threats</li>
+              <li>No Racism in Chat, no Homophobia, no Sexism, and no Religion Hate</li>
+              <li>No Insulting Admins, or Staff Decisions</li>
+              <li>No Doxxing</li>
+              <li>No Soundboards Without Permission</li>
+              <li>No Hacking of any kind</li>
+              <li>No Crashing the DC Server</li>
+              <li>Use Common Sense and Don’t do Bad Stuff!</li>
+            </ul>
+          </article>
+
+          <article class="rules-card rules-card--smp">
+            <h3>
+              <span class="rules-icon" aria-hidden="true">⛏</span>
+              Diversion SMP Rules
+            </h3>
+            <ul class="rules-list">
+              <li>No Spawn Killing</li>
+              <li>No Racial Slurs</li>
+              <li>No Hacking</li>
+              <li>No CC Griefing</li>
+              <li>No Duping</li>
+              <li>No Exploiting</li>
+              <li>No Exploiting the Plug-in</li>
+              <li>No Harassing the CCs</li>
+              <li>No Death Threats</li>
+              <li>No Religion Hate, or Sexuality Hate</li>
+              <li>Definitely No Homophobia</li>
+            </ul>
+            <div class="staff-note">
+              <h4>A Note From The Staff Team</h4>
+              <p>
+                Hi — on behalf of the staff team and SMP team. We made these rules to protect our community from bad behavior and to stop discrimination within it.
+                Some rules may change, but for now these are the rules. Enjoy yourselves, enjoy mainly the SMP, and have a great stay on the Diversion SMP!
+                <strong>— Staff and SMP Team</strong>
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FAQ Tab -->
+  <div id="faq-tab" class="tab-content">
+    <section class="section">
+      <div class="container faq-container">
+        <div class="section-header">
+          <p class="section-eyebrow">FAQ</p>
+          <h2>Common questions.</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>How do I join the server?</summary>
+            <p>Join our Discord server and head to the <strong>#welcome</strong> or <strong>#how-to-join</strong> channel. You'll find all the instructions there, including the server address and any requirements. Full rules are in the <strong>Rules</strong> tab above.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Is it really free to play?</summary>
+            <p>Yes — completely free. There's no pay-to-win shop or paid rank that gives you gameplay advantages. Everyone starts equal.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>What platforms can I play on?</summary>
+            <p>Any device that runs Minecraft Bedrock Edition: Windows 10/11, Xbox, PlayStation, Nintendo Switch, iOS, and Android. Java Edition is not compatible.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Is the server English only?</summary>
+            <p>English is the main language so everyone can communicate easily. That said, everyone is welcome — just make sure your in-game and Discord communication stays in English in the public channels.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Is it vanilla Bedrock?</summary>
+            <p>The server runs on Bedrock but with Java movement. Any additional plugins or datapacks will be announced in Discord when they're added — we keep it minimal to preserve the classic feel, but we still have some plugins to make the experience better.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>What are the rules?</summary>
+            <p>Read the full rules in the <strong>Rules</strong> tab (top of page) or in the <strong>Rules</strong> tab in our Discord. Short version: no griefing, no cheating, no harassment.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </div>
+
+ <!-- Staff Tab -->
+  <div id="staff-tab" class="tab-content">
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow">Staff</p>
+          <h2>Meet the Team</h2>
+        </div>
+        <div class="staff-grid">
+
+          <!-- Main Character -->
+          <div class="staff-card reveal">
+           <div class="staff-avatar-wrap staff-maincharacter-ring">
+              <img class="staff-avatar" src="./assets/Skins/zyezeon_skins.png" alt="ZyeZeon" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-maincharacter">Main Character</span>
+              <h3 class="staff-name">ZyeZeon</h3>
+            </div>
+          </div>
+
+            <div class="staff-card reveal">
+           <div class="staff-avatar-wrap staff-maincharacter-ring">
+              <img class="staff-avatar" src="./assets/Skins/Itxpigs_skins.png" alt="Itxpigs" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-maincharacter">Main Character</span>
+              <h3 class="staff-name">Itxpigs</h3>
+            </div>
+          </div>
+
+          <div class="staff-card reveal">
+           <div class="staff-avatar-wrap staff-maincharacter-ring">
+              <img class="staff-avatar" src="./assets/Skins/itzdukemc_skins.png" alt="DukeMC" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-maincharacter">Main Character</span>
+              <h3 class="staff-name">DukeMC</h3>
+            </div>
+          </div>
+
+          <!-- Founder -->
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-founder-ring">
+              <img class="staff-avatar" src="./assets/Skins/HighGuyMC_skins.png" alt="" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-founder">Founder</span>
+              <h3 class="staff-name">HighGuy</h3>
+            </div>
+          </div>
+
+          <!-- Network Owner -->
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-networkowner-ring">
+              <img class="staff-avatar" src="./assets/Skins/Santaopboi12_skins.png" alt="" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-networkowner">Network Owner</span>
+              <h3 class="staff-name">Red Pear</h3>
+            </div>
+          </div>
+
+          <!-- Head Admins -->
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-headadmin-ring">
+              <img class="staff-avatar" src="./assets/Skins/V1nx3228_skins.png" alt="VIPHRO" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-headadmin">Head Admin</span>
+              <h3 class="staff-name">VIPHRO</h3>
+            </div>
+          </div>
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-headadmin-ring">
+              <img class="staff-avatar" src="./assets/Skins/Slick9368_skins.png" alt="Slick" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-headadmin">Head Admin</span>
+              <h3 class="staff-name">Slick</h3>
+            </div>
+          </div>
+
+          <!-- Admins -->
+            <div class="staff-card reveal reveal-delay">
+             <div class="staff-avatar-wrap staff-admin-ring">
+              <img class="staff-avatar" src="./assets/Skins/Emank13_skins.png" alt="SCP | jayd" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-admin">Admin</span>
+              <h3 class="staff-name">SCP | jayd</h3>
+            </div>
+          </div>
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-admin-ring">
+              <img class="staff-avatar" src="./assets/Skins/Goozy0501_skins.png" alt="Goozy" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-admin">Admin</span>
+              <h3 class="staff-name">Goozy</h3>
+            </div>
+          </div>
+
+          <!-- Discord Admin -->
+           <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-discordadmin-ring">
+              <img class="staff-avatar" src="./assets/Skins/VyxelYT_skins.png" alt="VyxelYT" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-discordadmin">Discord Admin</span>
+              <h3 class="staff-name">VyxelYT</h3>
+            </div>
+          </div>
+             <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-discordadmin-ring">
+              <img class="staff-avatar" src="./assets/Skins/cactusdizzy_skins.png" alt="Cactusdizzy" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-discordadmin">Discord Admin</span>
+              <h3 class="staff-name">Cactusdizzy</h3>
+            </div>
+          </div>
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-discordadmin-ring">
+              <img class="staff-avatar" src="./assets/Skins/Oryntyt_skins.png" alt="Orynt" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-discordadmin">Discord Admin</span>
+              <h3 class="staff-name">Orynt</h3>
+            </div>
+          </div>
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-discordadmin-ring">
+              <img class="staff-avatar" src="./assets/Skins/Maskfellow01_skins.png" alt="Re:Miku" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-discordadmin">Discord Admin</span>
+              <h3 class="staff-name">Re:Miku</h3>
+            </div>
+          </div>
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-discordadmin-ring">
+              <img class="staff-avatar" src="./assets/Skins/Alexander6181_skins.png" alt="Alexander6181" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-discordadmin">Discord Admin</span>
+              <h3 class="staff-name">Alexander6181</h3>
+            </div>
+          </div>
+
+            <!-- MC Admins -->
+            <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-mcadmin-ring">
+              <img class="staff-avatar" src="./assets/Skins/PFTSSunnySideUp_skins.png" alt="Azula" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-mcadmin">MC Admin</span>
+              <h3 class="staff-name">Azula</h3>
+            </div>
+          </div>
+
+          <!-- Manager -->
+             <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-manager-ring">
+              <img class="staff-avatar" src="./assets/Skins/Fxlsry on TT_skins.png" alt="Fxlsry" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-manager">Manager</span>
+              <h3 class="staff-name">Fxlsry</h3>
+            </div>
+          </div>
+
+           <!-- Developer -->
+             <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-developer-ring">
+              <img class="staff-avatar" src="./assets/Skins/IsThatTheo_skins.png" alt="Niftymoonz" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-developer">Developer</span>
+              <h3 class="staff-name">Niftymoonz</h3>
+            </div>
+          </div>
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-developer-ring">
+              <img class="staff-avatar" src="./assets/Skins/jackblacklike_skins.png" alt="ALMIX" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-developer">Developer</span>
+              <h3 class="staff-name">ALMIX</h3>
+            </div>
+          </div>
+
+          <!-- Moderator -->
+             <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-moderator-ring">
+              <img class="staff-avatar" src="./assets/Skins/alokgamperpero_skins.png" alt="Shadow032871" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-moderator">Moderator</span>
+              <h3 class="staff-name">Shadow</h3>
+            </div>
+          </div>
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-moderator-ring">
+              <img class="staff-avatar" src="./assets/Skins/DJRose6344_skins.png" alt="TheRat" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-moderator">Moderator</span>
+              <h3 class="staff-name">TheRat</h3>
+            </div>
+          </div>
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-moderator-ring">
+              <img class="staff-avatar" src="./assets/Skins/Lamb_skins.png" alt="TheRat" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-moderator">Moderator</span>
+              <h3 class="staff-name">Lamb</h3>
+            </div>
+          </div>
+
+          <!-- Partner Manager -->
+             <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-partnermanager-ring">
+              <img class="staff-avatar" src="./assets/Skins/MasterVeil7084_skins.png" alt="S_mark55" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-partnermanager">Partner Manager</span>
+              <h3 class="staff-name">S_mark55</h3>
+            </div>
+          </div>
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-partnermanager-ring">
+              <img class="staff-avatar" src="./assets/Skins/TTVpeanutsky_skins.png" alt="Peanutskywalker" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-partnermanager">Partner Manager</span>
+              <h3 class="staff-name">Peanutskywalker</h3>
+            </div>
+          </div>
+
+          <!-- Event Manager -->
+             <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-eventmanager-ring">
+              <img class="staff-avatar" src="./assets/Skins/imperialknight_skins.png" alt="Amircansen4" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-eventmanager">Event Manager</span>
+              <h3 class="staff-name">Amircansen4</h3>
+            </div>
+          </div>
+          <div class="staff-card reveal reveal-delay">
+            <div class="staff-avatar-wrap staff-eventmanager-ring">
+              <img class="staff-avatar" src="./assets/Skins/DancyPoet110424_skins.png" alt="Dancy" width="80" height="80" loading="lazy">
+            </div>
+            <div class="staff-info">
+              <span class="staff-badge badge-eventmanager">Event Manager</span>
+              <h3 class="staff-name">Dancy</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Events Tab (placeholder) -->
+
+  <div id="events-tab" class="tab-content">
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 style="margin-bottom: 10px;">Upcoming Events & Competitions</h2>
+          <p class="section-eyebrow">Events</p>
+        </div>
+
+        <div class="events-content">
+          <div class="events-grid">
+            <article class="event-card reveal" aria-label="Coming soon">
+              <div class="event-top">
+                <span class="event-pill">Coming soon</span>
+              </div>
+              <h3 class="event-title">Coming soon</h3>
+            </article>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <footer class="site-footer">
+
+    <div class="container footer-inner">
+<div class="footer-logo">
+        <img class="logo-img sm" src="./assets/diversion-logo.png" alt="Diversion SMP" width="24" height="24" loading="lazy" decoding="async">
+        <span>Diversion SMP</span>
+      </div>
+      <span class="footer-copy">© <span id="year"></span> Diversion SMP · Not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Studios. This website does not collect or store any personal data. This was a Project created by VyxelYT and VIPHRO </span>
+  </footer>
+  </div>
+</div>
+
+<script src="./script.js"></script>
+</body>
+</html>
