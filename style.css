@@ -2,10 +2,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  height: 100%; /* Fixes the footer bug */
+  height: 100%; 
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Prevents the window from sliding or shrinking horizontally */
+  overflow-x: hidden;
   width: 100%;
 }
 
@@ -29,9 +29,9 @@ img { max-width: 100%; display: block; }
 #root {
   display: flex;
   flex-direction: column;
-  min-height: 100%; /* Keeps footer at bottom even on short pages */
+  min-height: 100%;
   width: 100%;
-  overflow-x: hidden; /* Second lock for the sliding bug */
+  overflow-x: hidden;
 }
 
 #main-content {
@@ -78,7 +78,7 @@ img { max-width: 100%; display: block; }
   position: sticky;
   top: 0;
   z-index: 100;
-  position: relative; /* Ensure stacking context for mobile btn */
+  position: relative;
   background: rgba(9, 9, 16, .92);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
@@ -424,7 +424,6 @@ h1 em {
 }
 
 /* Stats bar */
-/* Removed unused .tab-nav and .tab-buttons CSS */
 .tab-btn {
   padding: 10px 16px;
   border: 1px solid var(--border);
@@ -1605,40 +1604,40 @@ h1 em {
   /* Mobile menu overlay */
   .mobile-menu {
     position: fixed;
-    right: 0; /* Pushed to right wall */
+    right: 0;
     top: 0;
-    width: 320px; /* Fixed width sidebar */
+    width: 320px;
     height: 100vh;
     background: rgba(9, 9, 16, 0.877);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    z-index: 999; /* Above noise (999) and header */
+    z-index: 999;
 
     /* Important: don't transition "visibility"/layout changes via "all" */
     visibility: hidden;
     opacity: 0;
-    transform: translateX(100%); /* Slide from right */
+    transform: translateX(100%);
     pointer-events: none;
 
     transition:
       opacity 0.4s cubic-bezier(.25,.46,.45,.94),
       transform 0.4s cubic-bezier(.25,.46,.45,.94),
-      visibility 0s linear 0.4s; /* applied after slide-out */
+      visibility 0s linear 0.4s;
 
     overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
-    box-shadow: -8px 0 32px rgba(0,0,0,.6); /* Stronger left shadow */
+    -webkit-overflow-scrolling: touch;
+    box-shadow: -8px 0 32px rgba(0,0,0,.6);
   }
 
   .mobile-menu[aria-hidden="false"] {
     visibility: visible;
     opacity: 1;
-    transform: translateX(0); /* Slide in from right */
+    transform: translateX(0);
     pointer-events: auto;
     transition:
       opacity 0.4s cubic-bezier(.25,.46,.45,.94),
       transform 0.4s cubic-bezier(.25,.46,.45,.94),
-      visibility 0s linear 0s; /* become visible immediately */
+      visibility 0s linear 0s;
   }
 
   
