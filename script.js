@@ -1,4 +1,5 @@
 const invite = "https://discord.gg/R3Pf36DtY";
+
 // Server status
 async function fetchServerStatus() {
   const statusEl = document.getElementById("server-status");
@@ -91,28 +92,12 @@ document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
 });
 
 
-// Check URL hash on load
+// Check URL hash on load (activate requested tab if present)
 const hash = window.location.hash.slice(1);
-if (hash === 'rules') {
-  switchTab('rules');
+if (hash) {
+  const el = document.getElementById(hash + '-tab');
+  if (el) switchTab(hash);
 }
-
-// Events: Details toggle
-(function initEventDetailsToggle() {
-  const btn = document.getElementById('event-details');
-  const panel = document.getElementById('event-details-panel');
-  if (!btn || !panel) return;
-
-  const update = (expanded) => {
-    btn.setAttribute('aria-expanded', String(expanded));
-    panel.hidden = !expanded;
-  };
-
-  btn.addEventListener('click', () => {
-    const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-    update(!isExpanded);
-  });
-})();
 
 // Reveal animation (observe all .reveal elements) - optimized with rootMargin
 const observer = new IntersectionObserver(
@@ -140,26 +125,28 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
   if (!mobileBtn || !mobileMenu) return;
 
   function openMenu() {
-    // Apply state immediately (prevents transition timing issues)
-    mobileBtn.setAttribute('aria-expanded', 'true');
-    mobileMenu.setAttribute('aria-hidden', 'false');
-
-    // Lock scroll while menu is open
-    body.style.overflow = 'hidden';
+    requestAnimationFrame(() => {
+      mobileBtn.setAttribute('aria-expanded', 'true');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      // iOS scroll fix: prevent background scroll
+      if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        body.style.position = 'fixed';
+        body.style.width = '100%';
+      } else {
+        body.style.overflow = 'hidden';
+      }
+    });
   }
 
   function closeMenu() {
-    mobileBtn.setAttribute('aria-expanded', 'false');
-    mobileMenu.setAttribute('aria-hidden', 'true');
-
-    // Restore scroll after slide-out finishes (prevents “transition doesn’t match”)
-    window.setTimeout(() => {
-      if (mobileMenu.getAttribute('aria-hidden') === 'true') {
-        body.style.overflow = '';
-      }
-    }, 360);
+    requestAnimationFrame(() => {
+      mobileBtn.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      body.style.position = '';
+      body.style.width = '';
+      body.style.overflow = '';
+    });
   }
-
 
   // Toggle events
   mobileBtn.addEventListener('click', openMenu);
@@ -170,7 +157,7 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     btn.addEventListener('click', closeMenu);
   });
 
-  // Close on overlay click
+  // Close on overlay click (outside inner)
   mobileMenu.addEventListener('click', (e) => {
     if (e.target === mobileMenu) closeMenu();
   });
@@ -181,4 +168,198 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
       closeMenu();
     }
   });
+
+  // Close on window resize to desktop
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 800) {
+      closeMenu();
+    }
+  });
+})();
+
+/* ===== REVIEWS: localStorage-backed reviews list ===== */
+(function() {
+  const STORAGE_KEY = 'diversion_reviews';
+  const form = document.getElementById('review-form');
+  const listEl = document.getElementById('reviews-list');
+  const ratingEl = document.getElementById('rating');
+  let currentRating = 5;
+  const IP_STORAGE_KEY = 'diversion_reviews_ip';
+
+  async function getClientIp() {
+    const cachedIp = localStorage.getItem(IP_STORAGE_KEY);
+    if (cachedIp) return cachedIp;
+
+    return new Promise((resolve) => {
+      const ipRegex = /([0-9]{1,3}(?:\.[0-9]{1,3}){3})/;
+      const pc = new RTCPeerConnection({ iceServers: [] });
+      let ipFound = null;
+      const timeout = setTimeout(() => {
+        pc.close();
+        resolve(ipFound || 'unknown');
+      }, 3000);
+
+      function maybeResolve(candidate) {
+        const match = ipRegex.exec(candidate);
+        if (match) {
+          ipFound = match[1];
+          localStorage.setItem(IP_STORAGE_KEY, ipFound);
+          clearTimeout(timeout);
+          pc.close();
+          resolve(ipFound);
+        }
+      }
+
+      pc.onicecandidate = (event) => {
+        if (!event || !event.candidate || !event.candidate.candidate) return;
+        maybeResolve(event.candidate.candidate);
+      };
+
+      pc.createDataChannel('ip-check');
+      pc.createOffer().then((offer) => pc.setLocalDescription(offer)).catch(() => {
+        clearTimeout(timeout);
+        pc.close();
+        resolve('unknown');
+      });
+    });
+  }
+
+  const clientIpPromise = getClientIp();
+
+  // Profanity filter (English + German common words)
+  const PROFANITY = [
+    // English
+    'fuck','fucks','fucked','fucking','shit','shits','shithead','bitch','bitches','bastard','asshole','damn','crap','douche','douchebag','nigger','nigga' ,'negga','motherfucker',
+    // German
+    'scheiße','scheisse','arsch','arschloch','hurensohn','wichser','nutte','schlampe','ficker','verdammt','mist','idiot','dummkopf'
+  ];
+
+  function escapeRegExp(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+  function containsProfanity(text) {
+    if (!text) return false;
+    for (const w of PROFANITY) {
+      const re = new RegExp('\\b' + escapeRegExp(w) + '\\b', 'i');
+      if (re.test(text)) return true;
+    }
+    return false;
+  }
+
+  // error element below the form
+  let errorEl = null;
+  if (form) {
+    errorEl = document.createElement('div');
+    errorEl.className = 'reviews-error';
+    form.after(errorEl);
+  }
+
+  function loadReviews() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+  }
+
+  function saveReviews(arr) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+  }
+
+  function renderStars(num) {
+    let out = '';
+    for (let i=0;i<5;i++) out += (i < num) ? '★' : '☆';
+    return out;
+  }
+
+  function render() {
+    if (!listEl) return;
+    const reviews = loadReviews().slice().sort((a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0));
+    listEl.innerHTML = '';
+    if (reviews.length === 0) {
+      listEl.innerHTML = '<div style="color:var(--muted);">No reviews yet — be the first to leave one!</div>';
+      return;
+    }
+
+    reviews.forEach(r => {
+      const card = document.createElement('article');
+      card.className = 'review-card reveal';
+      const date = new Date(r.ts || 0);
+      card.innerHTML = `\n        <div class="review-meta">\n          <div class="review-name">${escapeHtml(r.name || 'Anonymous')}</div>\n          <div class="review-date">${date.toLocaleString()}</div>\n        </div>\n        <div class="review-stars">${renderStars(r.rating || 0)}</div>\n        <div class="review-body">${escapeHtml(r.message || '')}</div>\n        <button class="review-delete" data-ts="${r.ts}" aria-label="Löschen" title="Löschen">\n          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">\n            <polyline points="3 6 5 6 21 6"></polyline>\n            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>\n            <path d="M10 11v6"></path>\n            <path d="M14 11v6"></path>\n            <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>\n          </svg>\n        </button>\n      `;
+      listEl.appendChild(card);
+      observer.observe(card);
+      // attach delete handler
+      const del = card.querySelector('.review-delete');
+      if (del) {
+        del.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          const ts = Number(del.dataset.ts);
+          if (!ts) return;
+          if (!confirm('Möchtest du diese Bewertung wirklich löschen?')) return;
+          deleteReview(ts);
+        });
+      }
+    });
+  }
+
+  function escapeHtml(s){ return String(s).replace(/[&<>\"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'})[c]; }); }
+
+  // rating UI
+  if (ratingEl) {
+    ratingEl.querySelectorAll('.star').forEach(btn => {
+      const v = Number(btn.dataset.value);
+      function setHover(n) {
+        ratingEl.querySelectorAll('.star').forEach(b => b.classList.toggle('selected', Number(b.dataset.value) <= n));
+      }
+      btn.addEventListener('mouseenter', () => setHover(v));
+      btn.addEventListener('mouseleave', () => setHover(currentRating));
+      btn.addEventListener('click', () => { currentRating = v; setHover(currentRating); });
+    });
+    // initialize
+    ratingEl.querySelectorAll('.star').forEach(s => s.classList.toggle('selected', Number(s.dataset.value) <= currentRating));
+  }
+
+  // handle submit
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = (document.getElementById('review-name')?.value || 'Anonymous').trim();
+      const message = (document.getElementById('review-text')?.value || '').trim();
+      if (!message) {
+        if (errorEl) errorEl.textContent = '';
+        return alert('Please enter a review message.');
+      }
+
+      // Profanity check (name + message)
+      if (containsProfanity(name) || containsProfanity(message)) {
+        if (errorEl) errorEl.textContent = 'Your review contains inappropriate language. Please revise it.';
+        return;
+      }
+
+      const clientIp = await clientIpPromise;
+      const reviews = loadReviews();
+      const existingByIp = reviews.filter(r => String(r.ip || 'unknown').trim().toLowerCase() === clientIp.trim().toLowerCase()).length;
+      if (existingByIp >= 3) {
+        if (errorEl) errorEl.textContent = 'You can only submit up to 3 reviews per Person.';
+        return;
+      }
+
+      if (errorEl) errorEl.textContent = '';
+      reviews.push({ name, message, rating: currentRating, ts: Date.now(), ip: clientIp });
+      saveReviews(reviews);
+      (document.getElementById('review-text')).value = '';
+      (document.getElementById('review-name')).value = '';
+      currentRating = 5;
+      if (ratingEl) ratingEl.querySelectorAll('.star').forEach(s => s.classList.toggle('selected', Number(s.dataset.value) <= currentRating));
+      render();
+    });
+  }
+
+  function deleteReview(ts) {
+    const arr = loadReviews().filter(x => Number(x.ts) !== Number(ts));
+    saveReviews(arr);
+    render();
+  }
+
+  // initial render
+  render();
 })();
