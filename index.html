@@ -51,6 +51,7 @@
         <button class="tab-btn" data-tab="faq">FAQ</button>
         <button class="tab-btn" data-tab="staff">Staff</button>
         <button class="tab-btn" data-tab="events">Events</button>
+        <button class="tab-btn" data-tab="reviews">Reviews</button>
       </nav>
 
       <!-- Desktop Discord link -->
@@ -81,6 +82,7 @@
             <button class="tab-btn mobile-tab-btn" data-tab="faq">FAQ</button>
             <button class="tab-btn mobile-tab-btn" data-tab="staff">Staff</button>
             <button class="tab-btn mobile-tab-btn" data-tab="events">Events</button>
+            <button class="tab-btn mobile-tab-btn" data-tab="reviews">Reviews</button>
           </div>
           <div class="mobile-menu-discord">
             <a class="btn btn-primary discord-mobile" href="https://discord.gg/R3Pf36DtY" target="_blank" rel="noreferrer">
@@ -107,21 +109,29 @@
 
       <div class="container hero-inner">
         <div class="hero-copy reveal">
-          <div class="pill">
-
-            Bedrock Edition · English community
-          </div>
+          
 
           <h1>
-            Your next<br>
-            <em>Minecraft</em><br>
-            home.
+            <span class="h1-line">Your next</span>
+            <span class="h1-line h1-mc"><em>Minecraft</em></span>
+            <span class="h1-line">home.</span>
           </h1>
 
           <p class="subhead">
             Diversion SMP is a community-first Bedrock server where you build, explore,
             and create memories together — no drama, just good survival.
           </p>
+
+          <div class="hero-stats" style="margin-top:16px; display:flex; gap:18px; justify-content:center; align-items:center;">
+            <div class="stat-item" style="min-width:80px; padding:0;">
+              <span class="stat-value" id="server-players">—</span>
+              <span class="stat-label">Players</span>
+            </div>
+            <div class="stat-item" style="min-width:80px; padding:0;">
+              <span class="stat-value" id="server-status">Checking…</span>
+              <span class="stat-label">Status</span>
+            </div>
+          </div>
 
           <div class="hero-cta">
             <a class="btn btn-primary btn-large" href="https://discord.gg/R3Pf36DtY" target="_blank" rel="noreferrer">
@@ -137,79 +147,7 @@
           </div>
         </div>
 
-        <div class="hero-card reveal reveal-delay" aria-hidden="true">
-          <div class="card-header">
-            <div class="card-dots">
-              <span class="dot r"></span>
-              <span class="dot y"></span>
-              <span class="dot g"></span>
-            </div>
-            <span class="card-label">diversion-smp</span>
-          </div>
-
-          <div class="card-body">
-            <div class="server-info">
-              <div class="info-row">
-                <span class="info-label">Edition</span>
-                <span class="info-val tag-orange">Bedrock 1.26</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Platform</span>
-                <span class="info-val">PC · Console · Mobile</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Language</span>
-                <span class="info-val">🇬🇧 English</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Type</span>
-                <span class="info-val">Scripted Survival SMP</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Status</span>
-                <span class="info-val" id="server-status">Checking…</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Players</span>
-                <span class="info-val" id="server-players">—</span>
-              </div>
-            </div>
-
-            <div class="card-divider"></div>
-
-            <ul class="checklist">
-              <li>
-                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
-                  <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/>
-                  <path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Community-first, no pay-to-win
-              </li>
-              <li>
-                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
-                  <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/>
-                  <path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Regular events & build challenges
-              </li>
-              <li>
-                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
-                  <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/>
-                  <path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Active Discord with friendly players
-              </li>
-              <li>
-                <svg class="check-icon" viewBox="0 0 16 16" fill="none">
-                  <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/>
-                  <path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Cross-platform — everyone welcome
-              </li>
-            </ul>
-            </a>
-          </div>
-        </div>
+        
       </div>
 
       <!-- Stats bar -->
@@ -261,16 +199,22 @@
             <div class="panel-links panel-links--about"></div>
 
             <div class="panel-block">
-              <h4>Quick info</h4>
+              <h4>Server info</h4>
 
               <div class="info-list">
-                <div class="info-row-2"><span>Edition</span><strong>Minecraft Bedrock</strong></div>
-                <div class="info-row-2"><span>Version</span><strong>1.26.x</strong></div>
-                <div class="info-row-2"><span>Type</span><strong>Scripted Survival SMP</strong></div>
+                <div class="info-row-2"><span>Edition</span><strong>Bedrock 1.26</strong></div>
+                <div class="info-row-2"><span>Platform</span><strong>PC · Console · Mobile</strong></div>
                 <div class="info-row-2"><span>Language</span><strong>English</strong></div>
-                <div class="info-row-2"><span>Platforms</span><strong>All Bedrock devices</strong></div>
+                <div class="info-row-2"><span>Type</span><strong>Scripted Survival SMP</strong></div>
                 <div class="info-row-2"><span>Server Ip</span><strong>Coming soon</strong></div>
               </div>
+              
+              <ul class="feature-list">
+                <li class="feature-item">Community-first, no pay-to-win</li>
+                <li class="feature-item">Regular events &amp; build challenges</li>
+                <li class="feature-item">Active Discord with friendly players</li>
+                <li class="feature-item">Cross-platform — everyone welcome</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -705,6 +649,42 @@
   </div>
 
   <footer class="site-footer">
+
+  <!-- Reviews Tab -->
+  <div id="reviews-tab" class="tab-content">
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow">Community</p>
+          <h2>Player Reviews</h2>
+        </div>
+
+        <div class="panel-block reviews-panel reveal">
+          <form id="review-form" class="reviews-form">
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+              <input type="text" id="review-name" name="name" placeholder="Your name" aria-label="Your name" class="input-small" />
+              <div class="rating" id="rating" role="radiogroup" aria-label="Star rating">
+                <button type="button" class="star" data-value="1" aria-label="1 star">★</button>
+                <button type="button" class="star" data-value="2" aria-label="2 stars">★</button>
+                <button type="button" class="star" data-value="3" aria-label="3 stars">★</button>
+                <button type="button" class="star" data-value="4" aria-label="4 stars">★</button>
+                <button type="button" class="star" data-value="5" aria-label="5 stars">★</button>
+              </div>
+            </div>
+
+            <textarea id="review-text" name="message" rows="4" placeholder="Share your experience on Diversion SMP..." class="input-texarea"></textarea>
+
+            <div style="margin-top:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+              <button class="btn btn-primary" id="submit-review" type="submit">Submit review</button>
+              <span class="muted small" style="color:var(--muted);font-size:13px;">Its in beta thats why Reviews are stored locally in your browser</span>
+            </div>
+          </form>
+
+          <div id="reviews-list" class="reviews-list" style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;"></div>
+        </div>
+      </div>
+    </section>
+  </div>
 
     <div class="container footer-inner">
 <div class="footer-logo">
