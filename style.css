@@ -1211,12 +1211,12 @@ h1 em {
   box-shadow: 0 0 14px rgba(155, 134, 102, 0.664);
 }
 .staff-developer-ring {
-  background: linear-gradient(135deg, #363636be, #414141, #242424);
+  background: linear-gradient(135deg, #919191be, #414141, #242424);
   box-shadow: 0 0 14px rgba(117, 117, 117, 0.664);
 }
 .staff-moderator-ring {
   background: linear-gradient(135deg, #ff669d, #ff3881, #ff669ecc);
-  box-shadow: 0 0 14px rgba(117, 117, 117, 0.664);
+  box-shadow: 0 0 14px rgba(99, 99, 99, 0);
 }
 .staff-partnermanager-ring {
   background: linear-gradient(135deg, #051aff, #000ea3, #182bff);
