@@ -186,12 +186,27 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
   });
 })();
 
-//* ===== REVIEWS: Supabase-backed (global, persistent) ===== */
+/* ===== REVIEWS ===== */
 (function () {
   const form     = document.getElementById('review-form');
   const listEl   = document.getElementById('reviews-list');
   const ratingEl = document.getElementById('rating');
   let currentRating = 5;
+  const OWN_KEY = 'diversion_own_reviews';
+
+  // ── Eigene Review-IDs aus localStorage ──────────────────
+  function getOwnIds() {
+    try { return JSON.parse(localStorage.getItem(OWN_KEY) || '[]'); }
+    catch { return []; }
+  }
+  function saveOwnId(id) {
+    const ids = getOwnIds();
+    ids.push(id);
+    localStorage.setItem(OWN_KEY, JSON.stringify(ids));
+  }
+  function removeOwnId(id) {
+    localStorage.setItem(OWN_KEY, JSON.stringify(getOwnIds().filter(x => x !== id)));
+  }
 
   // ── Profanity filter ─────────────────────────────────────
   const PROFANITY = [
@@ -224,7 +239,16 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     form.after(errorEl);
   }
 
-  // ── Reviews von Supabase laden & anzeigen ────────────────
+  // ── Review löschen ───────────────────────────────────────
+  async function deleteReview(id) {
+    if (!confirm('Delete your review?')) return;
+    const { error } = await supabase.from('reviews').delete().eq('id', id);
+    if (error) { alert('Could not delete review. Please try again.'); return; }
+    removeOwnId(id);
+    loadAndRender();
+  }
+
+  // ── Reviews laden & anzeigen ─────────────────────────────
   async function loadAndRender() {
     if (!listEl) return;
     listEl.innerHTML = '<div style="color:var(--muted);">Loading reviews…</div>';
@@ -243,19 +267,38 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
       return;
     }
 
+    const ownIds = getOwnIds();
     listEl.innerHTML = '';
+
     data.forEach(r => {
       const card = document.createElement('article');
       card.className = 'review-card reveal';
       const date = new Date(r.created_at);
+      const isOwn = ownIds.includes(r.id);
+
       card.innerHTML = `
         <div class="review-meta">
           <div class="review-name">${escapeHtml(r.name || 'Anonymous')}</div>
           <div class="review-date">${date.toLocaleString()}</div>
+          ${isOwn ? `
+          <button class="review-delete" title="Delete your review" aria-label="Delete review">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+              <path d="M10 11v6M14 11v6"/>
+              <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>
+            </svg>
+          </button>` : ''}
         </div>
         <div class="review-stars">${renderStars(r.rating || 0)}</div>
         <div class="review-body">${escapeHtml(r.comment || '')}</div>
       `;
+
+      if (isOwn) {
+        card.querySelector('.review-delete').addEventListener('click', () => deleteReview(r.id));
+      }
+
       listEl.appendChild(card);
       if (typeof observer !== 'undefined') observer.observe(card);
     });
@@ -294,9 +337,11 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
       const btn = form.querySelector('[type="submit"]');
       if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
 
-      const { error } = await supabase
+      const { data: inserted, error } = await supabase
         .from('reviews')
-        .insert({ name, rating: currentRating, comment });
+        .insert({ name, rating: currentRating, comment })
+        .select('id')
+        .single();
 
       if (btn) { btn.disabled = false; btn.textContent = 'Submit review'; }
 
@@ -304,6 +349,9 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
         if (errorEl) errorEl.textContent = 'Error submitting review. Please try again.';
         return;
       }
+
+      // ID merken damit Mülleimer angezeigt wird
+      if (inserted?.id) saveOwnId(inserted.id);
 
       document.getElementById('review-text').value = '';
       document.getElementById('review-name').value = '';
