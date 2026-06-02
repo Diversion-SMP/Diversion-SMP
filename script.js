@@ -1,30 +1,10 @@
 // ── Supabase einbinden ────────────────────────────
-import { createClient } from
-  'https://esm.sh/@supabase/supabase-js@2'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const supabase = createClient(
   'https://bfnqrhraixqamzddfmcq.supabase.co',
   'sb_publishable_EuBqqbJLu7wbWISwYI08KA_xg6H8zqc'
 )
-
-// ── Reviews laden ────────────────────────────────
-async function loadReviews() {
-  const { data } = await supabase
-    .from('reviews')
-    .select('*')
-    .order('created_at', { ascending: false })
-  renderReviews(data ?? [])
-}
-
-// ── Review speichern ─────────────────────────────
-async function submitReview(name, rating, comment) {
-  const { error } = await supabase
-    .from('reviews')
-    .insert({ name, rating, comment })
-  if (!error) loadReviews()
-}
-
-document.addEventListener('DOMContentLoaded', loadReviews)
 
 const invite = "https://discord.gg/R3Pf36DtY";
 
@@ -206,75 +186,37 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
   });
 })();
 
-/* ===== REVIEWS: localStorage-backed reviews list ===== */
-(function() {
-  const STORAGE_KEY = 'diversion_reviews';
-  const form = document.getElementById('review-form');
-  const listEl = document.getElementById('reviews-list');
+//* ===== REVIEWS: Supabase-backed (global, persistent) ===== */
+(function () {
+  const form     = document.getElementById('review-form');
+  const listEl   = document.getElementById('reviews-list');
   const ratingEl = document.getElementById('rating');
   let currentRating = 5;
-  const IP_STORAGE_KEY = 'diversion_reviews_ip';
 
-  async function getClientIp() {
-    const cachedIp = localStorage.getItem(IP_STORAGE_KEY);
-    if (cachedIp) return cachedIp;
-
-    return new Promise((resolve) => {
-      const ipRegex = /([0-9]{1,3}(?:\.[0-9]{1,3}){3})/;
-      const pc = new RTCPeerConnection({ iceServers: [] });
-      let ipFound = null;
-      const timeout = setTimeout(() => {
-        pc.close();
-        resolve(ipFound || 'unknown');
-      }, 3000);
-
-      function maybeResolve(candidate) {
-        const match = ipRegex.exec(candidate);
-        if (match) {
-          ipFound = match[1];
-          localStorage.setItem(IP_STORAGE_KEY, ipFound);
-          clearTimeout(timeout);
-          pc.close();
-          resolve(ipFound);
-        }
-      }
-
-      pc.onicecandidate = (event) => {
-        if (!event || !event.candidate || !event.candidate.candidate) return;
-        maybeResolve(event.candidate.candidate);
-      };
-
-      pc.createDataChannel('ip-check');
-      pc.createOffer().then((offer) => pc.setLocalDescription(offer)).catch(() => {
-        clearTimeout(timeout);
-        pc.close();
-        resolve('unknown');
-      });
-    });
-  }
-
-  const clientIpPromise = getClientIp();
-
-  // Profanity filter (English + German common words)
+  // ── Profanity filter ─────────────────────────────────────
   const PROFANITY = [
-    // English
-    'fuck','fucks','fucked','fucking','shit','shits','shithead','bitch','bitches','bastard','asshole','damn','crap','douche','douchebag','nigger','nigga' ,'negga','motherfucker',
-    // German
-    'scheiße','scheisse','arsch','arschloch','hurensohn','wichser','nutte','schlampe','ficker','verdammt','mist','idiot','dummkopf'
+    'fuck','fucks','fucked','fucking','shit','shits','shithead','bitch','bitches',
+    'bastard','asshole','damn','crap','douche','douchebag','nigger','nigga','negga','motherfucker',
+    'scheiße','scheisse','arsch','arschloch','hurensohn','wichser','nutte','schlampe',
+    'ficker','verdammt','mist','idiot','dummkopf'
   ];
-
   function escapeRegExp(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
-
   function containsProfanity(text) {
     if (!text) return false;
     for (const w of PROFANITY) {
-      const re = new RegExp('\\b' + escapeRegExp(w) + '\\b', 'i');
-      if (re.test(text)) return true;
+      if (new RegExp('\\b' + escapeRegExp(w) + '\\b', 'i').test(text)) return true;
     }
     return false;
   }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c =>
+      ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+  }
+  function renderStars(n) {
+    return Array.from({length: 5}, (_, i) => i < n ? '★' : '☆').join('');
+  }
 
-  // error element below the form
+  // ── Error element ────────────────────────────────────────
   let errorEl = null;
   if (form) {
     errorEl = document.createElement('div');
@@ -282,112 +224,97 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     form.after(errorEl);
   }
 
-  function loadReviews() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch { return []; }
-  }
-
-  function saveReviews(arr) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
-  }
-
-  function renderStars(num) {
-    let out = '';
-    for (let i=0;i<5;i++) out += (i < num) ? '★' : '☆';
-    return out;
-  }
-
-  function render() {
+  // ── Reviews von Supabase laden & anzeigen ────────────────
+  async function loadAndRender() {
     if (!listEl) return;
-    const reviews = loadReviews().slice().sort((a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0));
-    listEl.innerHTML = '';
-    if (reviews.length === 0) {
+    listEl.innerHTML = '<div style="color:var(--muted);">Loading reviews…</div>';
+
+    const { data, error } = await supabase
+      .from('reviews')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error || !data) {
+      listEl.innerHTML = '<div style="color:var(--muted);">Could not load reviews.</div>';
+      return;
+    }
+    if (data.length === 0) {
       listEl.innerHTML = '<div style="color:var(--muted);">No reviews yet — be the first to leave one!</div>';
       return;
     }
 
-    reviews.forEach(r => {
+    listEl.innerHTML = '';
+    data.forEach(r => {
       const card = document.createElement('article');
       card.className = 'review-card reveal';
-      const date = new Date(r.ts || 0);
-      card.innerHTML = `\n        <div class="review-meta">\n          <div class="review-name">${escapeHtml(r.name || 'Anonymous')}</div>\n          <div class="review-date">${date.toLocaleString()}</div>\n        </div>\n        <div class="review-stars">${renderStars(r.rating || 0)}</div>\n        <div class="review-body">${escapeHtml(r.message || '')}</div>\n        <button class="review-delete" data-ts="${r.ts}" aria-label="Löschen" title="Löschen">\n          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">\n            <polyline points="3 6 5 6 21 6"></polyline>\n            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>\n            <path d="M10 11v6"></path>\n            <path d="M14 11v6"></path>\n            <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>\n          </svg>\n        </button>\n      `;
+      const date = new Date(r.created_at);
+      card.innerHTML = `
+        <div class="review-meta">
+          <div class="review-name">${escapeHtml(r.name || 'Anonymous')}</div>
+          <div class="review-date">${date.toLocaleString()}</div>
+        </div>
+        <div class="review-stars">${renderStars(r.rating || 0)}</div>
+        <div class="review-body">${escapeHtml(r.comment || '')}</div>
+      `;
       listEl.appendChild(card);
-      observer.observe(card);
-      // attach delete handler
-      const del = card.querySelector('.review-delete');
-      if (del) {
-        del.addEventListener('click', (ev) => {
-          ev.preventDefault();
-          const ts = Number(del.dataset.ts);
-          if (!ts) return;
-          if (!confirm('Möchtest du diese Bewertung wirklich löschen?')) return;
-          deleteReview(ts);
-        });
-      }
+      if (typeof observer !== 'undefined') observer.observe(card);
     });
   }
 
-  function escapeHtml(s){ return String(s).replace(/[&<>\"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'})[c]; }); }
-
-  // rating UI
+  // ── Stern-Bewertung UI ───────────────────────────────────
   if (ratingEl) {
-    ratingEl.querySelectorAll('.star').forEach(btn => {
+    const stars = ratingEl.querySelectorAll('.star');
+    function setStars(n) {
+      stars.forEach(b => b.classList.toggle('selected', Number(b.dataset.value) <= n));
+    }
+    stars.forEach(btn => {
       const v = Number(btn.dataset.value);
-      function setHover(n) {
-        ratingEl.querySelectorAll('.star').forEach(b => b.classList.toggle('selected', Number(b.dataset.value) <= n));
-      }
-      btn.addEventListener('mouseenter', () => setHover(v));
-      btn.addEventListener('mouseleave', () => setHover(currentRating));
-      btn.addEventListener('click', () => { currentRating = v; setHover(currentRating); });
+      btn.addEventListener('mouseenter', () => setStars(v));
+      btn.addEventListener('mouseleave', () => setStars(currentRating));
+      btn.addEventListener('click',      () => { currentRating = v; setStars(v); });
     });
-    // initialize
-    ratingEl.querySelectorAll('.star').forEach(s => s.classList.toggle('selected', Number(s.dataset.value) <= currentRating));
+    setStars(currentRating);
   }
 
-  // handle submit
+  // ── Formular absenden ────────────────────────────────────
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const name = (document.getElementById('review-name')?.value || 'Anonymous').trim();
-      const message = (document.getElementById('review-text')?.value || '').trim();
-      if (!message) {
-        if (errorEl) errorEl.textContent = '';
-        return alert('Please enter a review message.');
-      }
+      const name    = (document.getElementById('review-name')?.value || 'Anonymous').trim();
+      const comment = (document.getElementById('review-text')?.value || '').trim();
 
-      // Profanity check (name + message)
-      if (containsProfanity(name) || containsProfanity(message)) {
+      if (!comment) return alert('Please enter a review message.');
+
+      if (containsProfanity(name) || containsProfanity(comment)) {
         if (errorEl) errorEl.textContent = 'Your review contains inappropriate language. Please revise it.';
         return;
       }
+      if (errorEl) errorEl.textContent = '';
 
-      const clientIp = await clientIpPromise;
-      const reviews = loadReviews();
-      const existingByIp = reviews.filter(r => String(r.ip || 'unknown').trim().toLowerCase() === clientIp.trim().toLowerCase()).length;
-      if (existingByIp >= 3) {
-        if (errorEl) errorEl.textContent = 'You can only submit up to 3 reviews per Person.';
+      const btn = form.querySelector('[type="submit"]');
+      if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
+
+      const { error } = await supabase
+        .from('reviews')
+        .insert({ name, rating: currentRating, comment });
+
+      if (btn) { btn.disabled = false; btn.textContent = 'Submit review'; }
+
+      if (error) {
+        if (errorEl) errorEl.textContent = 'Error submitting review. Please try again.';
         return;
       }
 
-      if (errorEl) errorEl.textContent = '';
-      reviews.push({ name, message, rating: currentRating, ts: Date.now(), ip: clientIp });
-      saveReviews(reviews);
-      (document.getElementById('review-text')).value = '';
-      (document.getElementById('review-name')).value = '';
+      document.getElementById('review-text').value = '';
+      document.getElementById('review-name').value = '';
       currentRating = 5;
-      if (ratingEl) ratingEl.querySelectorAll('.star').forEach(s => s.classList.toggle('selected', Number(s.dataset.value) <= currentRating));
-      render();
+      if (ratingEl) ratingEl.querySelectorAll('.star').forEach(s =>
+        s.classList.toggle('selected', Number(s.dataset.value) <= currentRating));
+
+      loadAndRender();
     });
   }
 
-  function deleteReview(ts) {
-    const arr = loadReviews().filter(x => Number(x.ts) !== Number(ts));
-    saveReviews(arr);
-    render();
-  }
-
-  // initial render
-  render();
+  // ── Beim Laden starten ───────────────────────────────────
+  document.addEventListener('DOMContentLoaded', loadAndRender);
 })();
