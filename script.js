@@ -1,3 +1,31 @@
+// ── Supabase einbinden ────────────────────────────
+import { createClient } from
+  'https://esm.sh/@supabase/supabase-js@2'
+
+const supabase = createClient(
+  'https://bfnqrhraixqamzddfmcq.supabase.co',
+  'sb_publishable_EuBqqbJLu7wbWISwYI08KA_xg6H8zqc'
+)
+
+// ── Reviews laden ────────────────────────────────
+async function loadReviews() {
+  const { data } = await supabase
+    .from('reviews')
+    .select('*')
+    .order('created_at', { ascending: false })
+  renderReviews(data ?? [])
+}
+
+// ── Review speichern ─────────────────────────────
+async function submitReview(name, rating, comment) {
+  const { error } = await supabase
+    .from('reviews')
+    .insert({ name, rating, comment })
+  if (!error) loadReviews()
+}
+
+document.addEventListener('DOMContentLoaded', loadReviews)
+
 const invite = "https://discord.gg/R3Pf36DtY";
 
 // Server status
