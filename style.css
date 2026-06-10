@@ -535,7 +535,6 @@ h1 em {
   display: block;
 }
 
-/* FIX: Removes the 40px empty gap above the background picture specifically on the home page */
 #home-tab {
   padding-top: 0;
 }
@@ -771,7 +770,7 @@ h1 em {
   /* Make the area below the hero fully black as requested */
   background: #000;
   border-top: none;
-  border-bottom: 1px solid var(--border);
+  border-bottom: none;
 }
 .about-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
 @media (min-width: 900px) { .about-grid { grid-template-columns: 1fr 1fr; gap: 56px; } }
@@ -1163,11 +1162,137 @@ h1 em {
 .cta-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
 
 /* ===== STAFF MAIN ===== */
+.staff-role-section {
+  margin-bottom: 48px;
+}
+
+.staff-role-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 20px;
+  border: 2px solid;
+  border-radius: 12px;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Main Character */
+.staff-role-section.role-maincharacter .staff-role-title {
+  color: #ffd700;
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.08);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+/* Founder */
+.staff-role-section.role-founder .staff-role-title {
+  color: #8b1afc;
+  border-color: #8b1afc;
+  background: rgba(139, 26, 252, 0.08);
+  text-shadow: 0 0 10px rgba(154, 97, 211, 0.4);
+}
+
+/* Network Owner */
+.staff-role-section.role-networkowner .staff-role-title {
+  color: #ff2323;
+  border-color: #ff2323;
+  background: rgba(255, 35, 35, 0.08);
+  text-shadow: 0 0 10px rgba(255, 68, 44, 0.4);
+}
+
+/* Head Admin */
+.staff-role-section.role-headadmin .staff-role-title {
+  color: #8d35b3;
+  border-color: #8d35b3;
+  background: rgba(141, 53, 179, 0.08);
+  text-shadow: 0 0 10px rgba(139, 53, 179, 0.4);
+}
+
+/* Admin */
+.staff-role-section.role-admin .staff-role-title {
+  color: #ff6a00;
+  border-color: #ff6a00;
+  background: rgba(255, 106, 0, 0.08);
+  text-shadow: 0 0 10px rgba(255, 106, 0, 0.4);
+}
+
+/* Discord Admin */
+.staff-role-section.role-discordadmin .staff-role-title {
+  color: #00d9ff;
+  border-color: #00d9ff;
+  background: rgba(0, 217, 255, 0.08);
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.4);
+}
+
+/* MC Admin */
+.staff-role-section.role-mcadmin .staff-role-title {
+  color: #00db55;
+  border-color: #00db55;
+  background: rgba(0, 219, 85, 0.08);
+  text-shadow: 0 0 10px rgba(1, 219, 85, 0.4);
+}
+
+/* Manager */
+.staff-role-section.role-manager .staff-role-title {
+  color: #ffd492;
+  border-color: #ffd492;
+  background: rgba(255, 212, 146, 0.08);
+  text-shadow: 0 0 10px rgba(255, 212, 146, 0.4);
+}
+
+/* Developer */
+.staff-role-section.role-developer .staff-role-title {
+  color: #a0a0a0;
+  border-color: #a0a0a0;
+  background: rgba(160, 160, 160, 0.08);
+  text-shadow: 0 0 10px rgba(160, 160, 160, 0.4);
+}
+
+/* Moderator */
+.staff-role-section.role-moderator .staff-role-title {
+  color: #ff619b;
+  border-color: #ff619b;
+  background: rgba(255, 97, 155, 0.08);
+  text-shadow: 0 0 10px rgba(255, 97, 155, 0.4);
+}
+
+/* Partner Manager */
+.staff-role-section.role-partnermanager .staff-role-title {
+  color: #1d30ff;
+  border-color: #1d30ff;
+  background: rgba(29, 48, 255, 0.08);
+  text-shadow: 0 0 10px rgba(1, 63, 197, 0.4);
+}
+
+/* Event Manager */
+.staff-role-section.role-eventmanager .staff-role-title {
+  color: #00e2bf;
+  border-color: #00e2bf;
+  background: rgba(0, 226, 191, 0.08);
+  text-shadow: 0 0 10px rgba(1, 197, 197, 0.4);
+}
+
 .staff-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   max-width: 900px;
+  margin: 0 auto;
+}
+
+.staff-role-section.role-single .staff-grid {
+  grid-template-columns: 1fr;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.staff-role-section.role-double .staff-grid {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 600px;
   margin: 0 auto;
 }
 
@@ -1199,10 +1324,6 @@ h1 em {
 .staff-maincharacter-ring {
   background: linear-gradient(135deg, #ffd700, #ff9a3c, #ff6a00);
   box-shadow: 0 0 20px rgba(255, 160, 0, .45);
-}
-.staff-founder-ring {
-  background: linear-gradient(135deg, #7200e5, #5300a7, #8b1afc);
-  box-shadow: 0 0 20px rgba(154, 97, 211, 0.897);
 }
 .staff-networkowner-ring {
   background: linear-gradient(135deg, #ff2323cb, #e00b0bbb, #9e0000);
@@ -1282,11 +1403,6 @@ h1 em {
   border: 1px solid rgba(255, 215, 0, .35);
   color: #ffd700;
 }
-.badge-founder {
-  background: #743cac83;
-  border: 1px solid #7200e5;
-  color: #ab57ff;
-}
 .badge-networkowner {
   background: #ff25253d;
   border: 1px solid #ff260059;
@@ -1337,12 +1453,24 @@ h1 em {
   border: 1px solid #02fdd7;
   color: #00e2bf;
 }
-@media (max-width: 599px) {
+@media (max-width: 999px) {
   .staff-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
+}
+
+@media (max-width: 599px) {
+  .staff-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
   .staff-card { padding: 24px 14px 20px; }
+  .staff-role-title {
+    font-size: 24px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1366,10 +1494,121 @@ h1 em {
 }
 
 /* ===== FOOTER ===== */
-.site-footer { border-top: 1px solid var(--border); padding: 22px 0; background: rgba(0,0,0,.3); }
-.footer-inner { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
-.footer-logo { display: flex; align-items: center; gap: 8px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; }
-.footer-copy { color: var(--muted); font-size: 12px; }
+.site-footer { 
+  background: #000000; 
+  border-top: none; 
+  padding: 0;
+}
+
+.footer-inner { 
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 120px;
+  padding: 60px 0 40px 0;
+  align-items: flex-start;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.footer-logo { 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+  font-family: 'Syne', sans-serif; 
+  font-weight: 800; 
+  font-size: 15px; 
+}
+
+.footer-desc {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+.footer-legal {
+  color: rgba(232, 230, 240, .4);
+  font-size: 11px;
+  line-height: 1.4;
+  max-width: 280px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 8px;
+  transition: all .3s;
+}
+
+.footer-social-link:hover {
+  color: var(--orange2);
+  border-color: var(--orange2);
+  background: rgba(255, 106, 0, .1);
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 200px;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--orange2);
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a {
+  font-size: 14px;
+  color: var(--muted);
+  transition: color .3s;
+}
+
+.footer-links a:hover {
+  color: var(--orange2);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.07);
+  padding: 24px 0;
+  text-align: center;
+}
+
+.footer-copy { 
+  color: var(--muted); 
+  font-size: 12px; 
+}
 
 /* ===== SCROLL REVEAL ANIMATIONS ===== */
 .reveal {
@@ -1625,9 +1864,18 @@ h1 em {
 /* Footer mobile */
 @media (max-width: 600px) {
   .footer-inner {
-    flex-direction: column;
-    gap: 12px;
-    text-align: center;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 0 32px 0;
+  }
+
+  .footer-columns {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .footer-desc {
+    max-width: none;
   }
 
   /* Ensure sticky footer works reliably on small screens */
