@@ -6,7 +6,7 @@ const supabase = createClient(
   'sb_publishable_EuBqqbJLu7wbWISwYI08KA_xg6H8zqc'
 )
 
-const invite = "https://discord.gg/R3Pf36DtY";
+const invite = "https://discord.gg/PXbb5M9Zg";
 
 // Server status
 async function fetchServerStatus() {
@@ -366,3 +366,12 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
   // ── Beim Laden starten ───────────────────────────────────
   document.addEventListener('DOMContentLoaded', loadAndRender);
 })();
+
+// ── Footer tab links ─────────────────────────────────────
+document.querySelectorAll('[data-tab-link]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const tab = link.dataset.tabLink;
+    switchTab(tab);
+  });
+});
