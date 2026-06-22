@@ -20,8 +20,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preload" as="image" href="./assets/hero-picture.png" fetchpriority="high">
+  <link rel="preload" as="image" href="./assets/optimized/diversion-logo-128.png">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
   <link rel="stylesheet" href="./style.css" />
 </head>
 
@@ -40,7 +44,7 @@
   <header class="site-header">
     <div class="container header-inner">
 <a class="logo" href="#">
-        <img class="logo-img" src="./assets/diversion-logo.png" alt="Diversion SMP" width="32" height="32" loading="eager" decoding="async">
+        <img class="logo-img" src="./assets/optimized/diversion-logo-128.png" alt="Diversion SMP" width="32" height="32" loading="eager" decoding="async" fetchpriority="high">
         <span>Diversion SMP</span>
       </a>
 
@@ -368,7 +372,7 @@
           <div class="staff-grid">
             <div class="staff-card reveal">
               <div class="staff-avatar-wrap staff-maincharacter-ring">
-                <img class="staff-avatar" src="./assets/Skins/zyezeon_skins.png" alt="ZyeZeon" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/zyezeon_skins.png" alt="ZyeZeon" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-maincharacter">Main Character</span>
@@ -377,7 +381,7 @@
             </div>
             <div class="staff-card reveal">
               <div class="staff-avatar-wrap staff-maincharacter-ring">
-                <img class="staff-avatar" src="./assets/Skins/Itxpigs_skins.png" alt="Itxpigs" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/Itxpigs_skins.png" alt="Itxpigs" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-maincharacter">Main Character</span>
@@ -386,7 +390,7 @@
             </div>
             <div class="staff-card reveal">
               <div class="staff-avatar-wrap staff-maincharacter-ring">
-                <img class="staff-avatar" src="./assets/Skins/itzdukemc_skins.png" alt="DukeMC" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/itzdukemc_skins.png" alt="DukeMC" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-maincharacter">Main Character</span>
@@ -402,7 +406,7 @@
           <div class="staff-grid">
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-networkowner-ring">
-                <img class="staff-avatar" src="./assets/Skins/Santaopboi12_skins.png" alt="" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/Santaopboi12_skins.png" alt="" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-networkowner">Network Owner</span>
@@ -418,7 +422,7 @@
           <div class="staff-grid">
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-headadmin-ring">
-                <img class="staff-avatar" src="./assets/Skins/V1nx3228_skins.png" alt="VIPHRO" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/V1nx3228_skins.png" alt="VIPHRO" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-headadmin">Head Admin</span>
@@ -427,7 +431,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-headadmin-ring">
-                <img class="staff-avatar" src="./assets/Skins/Slick9368_skins.png" alt="Slick" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/Slick9368_skins.png" alt="Slick" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-headadmin">Head Admin</span>
@@ -443,7 +447,7 @@
           <div class="staff-grid">
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-admin-ring">
-                <img class="staff-avatar" src="./assets/Skins/Emank13_skins.png" alt="SCP | jayd" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/Emank13_skins.png" alt="SCP | jayd" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-admin">Admin</span>
@@ -452,7 +456,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-admin-ring">
-                <img class="staff-avatar" src="./assets/Skins/Goozy0501_skins.png" alt="Goozy" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/Goozy0501_skins.png" alt="Goozy" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-admin">Admin</span>
@@ -468,7 +472,7 @@
           <div class="staff-grid">
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-discordadmin-ring">
-                <img class="staff-avatar" src="./assets/Skins/VyxelYT_skins.png" alt="VyxelYT" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/VyxelYT_skins.png" alt="VyxelYT" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-discordadmin">Discord Admin</span>
@@ -477,7 +481,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-discordadmin-ring">
-                <img class="staff-avatar" src="./assets/Skins/cactusdizzy_skins.png" alt="Cactusdizzy" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/cactusdizzy_skins.png" alt="Cactusdizzy" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-discordadmin">Discord Admin</span>
@@ -486,7 +490,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-discordadmin-ring">
-                <img class="staff-avatar" src="./assets/Skins/Oryntyt_skins.png" alt="Orynt" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/Oryntyt_skins.png" alt="Orynt" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-discordadmin">Discord Admin</span>
@@ -495,7 +499,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-discordadmin-ring">
-                <img class="staff-avatar" src="./assets/Skins/Maskfellow01_skins.png" alt="Re:Miku" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/Maskfellow01_skins.png" alt="Re:Miku" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-discordadmin">Discord Admin</span>
@@ -504,7 +508,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-discordadmin-ring">
-                <img class="staff-avatar" src="./assets/Skins/iiifyglewiii_skins.png" alt="IIIFYGLEWIII" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/iiifyglewiii_skins.png" alt="IIIFYGLEWIII" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-discordadmin">Discord Admin</span>
@@ -513,7 +517,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-discordadmin-ring">
-                <img class="staff-avatar" src="./assets/Skins/notskullo_skins.png" alt="Notskullo" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/notskullo_skins.png" alt="Notskullo" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-discordadmin">Discord Admin</span>
@@ -522,7 +526,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-discordadmin-ring">
-                <img class="staff-avatar" src="./assets/Skins/Alexander6181_skins.png" alt="Alexander6181" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/Alexander6181_skins.png" alt="Alexander6181" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-discordadmin">Discord Admin</span>
@@ -538,7 +542,7 @@
           <div class="staff-grid">
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-mcadmin-ring">
-                <img class="staff-avatar" src="./assets/Skins/PFTSSunnySideUp_skins.png" alt="Azula" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/PFTSSunnySideUp_skins.png" alt="Azula" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-mcadmin">MC Admin</span>
@@ -547,7 +551,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-mcadmin-ring">
-                <img class="staff-avatar" src="./assets/Skins/TT WuxMC_skins.png" alt="Wux" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/TT WuxMC_skins.png" alt="Wux" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-mcadmin">MC Admin</span>
@@ -563,7 +567,7 @@
           <div class="staff-grid">
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-manager-ring">
-                <img class="staff-avatar" src="./assets/Skins/Fxlsry on TT_skins.png" alt="Fxlsry" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/Fxlsry on TT_skins.png" alt="Fxlsry" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-manager">Manager</span>
@@ -579,7 +583,7 @@
           <div class="staff-grid">
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-developer-ring">
-                <img class="staff-avatar" src="./assets/Skins/IsThatTheo_skins.png" alt="Niftymoonz" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/IsThatTheo_skins.png" alt="Niftymoonz" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-developer">Developer</span>
@@ -588,7 +592,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-developer-ring">
-                <img class="staff-avatar" src="./assets/Skins/jackblacklike_skins.png" alt="ALMIX" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/jackblacklike_skins.png" alt="ALMIX" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-developer">Developer</span>
@@ -604,7 +608,7 @@
           <div class="staff-grid">
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-moderator-ring">
-                <img class="staff-avatar" src="./assets/Skins/alokgamperpero_skins.png" alt="Shadow032871" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/alokgamperpero_skins.png" alt="Shadow032871" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-moderator">Moderator</span>
@@ -613,7 +617,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-moderator-ring">
-                <img class="staff-avatar" src="./assets/Skins/DJRose6344_skins.png" alt="TheRat" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/DJRose6344_skins.png" alt="TheRat" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-moderator">Moderator</span>
@@ -622,7 +626,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-moderator-ring">
-                <img class="staff-avatar" src="./assets/Skins/Lamb_skins.png" alt="Lamb" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/Lamb_skins.png" alt="Lamb" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-moderator">Moderator</span>
@@ -638,7 +642,7 @@
           <div class="staff-grid">
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-partnermanager-ring">
-                <img class="staff-avatar" src="./assets/Skins/MasterVeil7084_skins.png" alt="S_mark55" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/MasterVeil7084_skins.png" alt="S_mark55" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-partnermanager">Partner Manager</span>
@@ -647,7 +651,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-partnermanager-ring">
-                <img class="staff-avatar" src="./assets/Skins/TTVpeanutsky_skins.png" alt="Peanutskywalker" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/TTVpeanutsky_skins.png" alt="Peanutskywalker" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-partnermanager">Partner Manager</span>
@@ -663,7 +667,7 @@
           <div class="staff-grid">
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-eventmanager-ring">
-                <img class="staff-avatar" src="./assets/Skins/imperialknight_skins.png" alt="Amircansen4" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/imperialknight_skins.png" alt="Amircansen4" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-eventmanager">Event Manager</span>
@@ -672,7 +676,7 @@
             </div>
             <div class="staff-card reveal reveal-delay">
               <div class="staff-avatar-wrap staff-eventmanager-ring">
-                <img class="staff-avatar" src="./assets/Skins/DancyPoet110424_skins.png" alt="Dancy" width="80" height="80" loading="lazy">
+                <img class="staff-avatar" src="./assets/optimized/Skins/DancyPoet110424_skins.png" alt="Dancy" width="80" height="80" loading="lazy">
               </div>
               <div class="staff-info">
                 <span class="staff-badge badge-eventmanager">Event Manager</span>
@@ -690,20 +694,54 @@
   <div id="events-tab" class="tab-content">
     <section class="section">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header events-header">
           <p class="section-eyebrow">Events</p>
-          <h2 style="margin-bottom: 10px;">Upcoming Events & Competitions</h2>
+          <h2>Upcoming Events</h2>
         </div>
 
         <div class="events-content">
-          <div class="events-grid">
-            <article class="event-card reveal" aria-label="Coming soon">
+          <article class="event-card reveal" aria-labelledby="multi-kits-title">
+            <div class="event-date-block" aria-label="Friday, June 26 at 18:00">
+              <span class="event-day">Fri</span>
+              <span class="event-number">26</span>
+              <span class="event-month">June</span>
+            </div>
+
+            <div class="event-main">
               <div class="event-top">
-                <span class="event-pill">Coming soon</span>
+                <span class="event-pill">Season 2 Reward</span>
+                <span class="event-date">18:00</span>
               </div>
-              <h3 class="event-title">Coming soon</h3>
-            </article>
-          </div>
+
+              <h3 class="event-title" id="multi-kits-title">Multi Kits Event</h3>
+              <p class="event-desc">
+                Fight through multiple rounds. The player who finishes first wins a permanent
+                side-character spot in Season 2, plus a custom tag showing which character
+                they will be.
+              </p>
+
+              <div class="event-meta" aria-label="Event details">
+                <div class="event-meta-item">
+                  <span class="event-meta-label">Format</span>
+                  <span class="event-meta-val">Multiple rounds</span>
+                </div>
+                <div class="event-meta-item">
+                  <span class="event-meta-label">Winner</span>
+                  <span class="event-meta-val">First place takes it all</span>
+                </div>
+                <div class="event-meta-item">
+                  <span class="event-meta-label">Mode</span>
+                  <span class="event-meta-val">Multi Kits</span>
+                </div>
+                <div class="event-meta-item">
+                  <span class="event-meta-label">Prize</span>
+                  <span class="event-meta-val">Season 2 side character + custom tag</span>
+                </div>
+              </div>
+
+              <p class="event-note">Make sure to be there. You do not want to miss it.</p>
+            </div>
+          </article>
         </div>
 
       </div>
@@ -750,7 +788,7 @@
     <div class="container footer-inner">
       <div class="footer-brand">
         <div class="footer-logo">
-          <img class="logo-img sm" src="./assets/diversion-logo.png" alt="Diversion SMP" width="24" height="24" loading="lazy" decoding="async">
+          <img class="logo-img sm" src="./assets/optimized/diversion-logo-128.png" alt="Diversion SMP" width="24" height="24" loading="lazy" decoding="async">
           <span>Diversion SMP</span>
         </div>
         <span class="footer-desc">Join our thriving Minecraft Bedrock SMP community. Play, build, and connect with players worldwide.</span>
