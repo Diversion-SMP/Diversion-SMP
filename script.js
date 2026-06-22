@@ -1,10 +1,19 @@
 // ── Supabase einbinden ────────────────────────────
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+const SUPABASE_URL = 'https://bfnqrhraixqamzddfmcq.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_EuBqqbJLu7wbWISwYI08KA_xg6H8zqc';
+let supabasePromise;
 
-const supabase = createClient(
-  'https://bfnqrhraixqamzddfmcq.supabase.co',
-  'sb_publishable_EuBqqbJLu7wbWISwYI08KA_xg6H8zqc'
-)
+function getSupabase() {
+  if (!supabasePromise) {
+    supabasePromise = import('https://esm.sh/@supabase/supabase-js@2')
+      .then(({ createClient }) => createClient(SUPABASE_URL, SUPABASE_KEY))
+      .catch((error) => {
+        supabasePromise = null;
+        throw error;
+      });
+  }
+  return supabasePromise;
+}
 
 const invite = "https://discord.gg/PXbb5M9Zg";
 
@@ -33,7 +42,9 @@ async function fetchServerStatus() {
 }
 
 fetchServerStatus();
-setInterval(fetchServerStatus, 60000);
+setInterval(() => {
+  if (!document.hidden) fetchServerStatus();
+}, 60000);
 
 // Footer year
 const yearEl = document.getElementById("year");
@@ -56,16 +67,26 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   });
 });
 
+const tabContents = [...document.querySelectorAll('.tab-content')];
+const tabButtons = [...document.querySelectorAll('.tab-btn')];
+
+function observeReveals(root = document) {
+  root.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
+}
+
 // Tab switching
 function switchTab(tab) {
+  const targetTab = document.getElementById(tab + '-tab');
+  if (!targetTab) return;
+
   // Hide all tab contents
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  tabContents.forEach(c => c.classList.remove('active'));
   
   // Remove active from ALL tab buttons first
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  tabButtons.forEach(b => b.classList.remove('active'));
   
   // Activate content
-  document.getElementById(tab + '-tab').classList.add('active');
+  targetTab.classList.add('active');
   
   // Activate ONE button per set: desktop and mobile
   document.querySelector('.nav-tabs .tab-btn[data-tab="' + tab + '"]')?.classList.add('active');
@@ -74,10 +95,8 @@ function switchTab(tab) {
   // Update URL hash
   window.history.replaceState(null, null, '#' + tab);
   
-  // Refresh reveals for new content
-  setTimeout(() => {
-    document.querySelectorAll('.tab-content .reveal').forEach(el => observer.observe(el));
-  }, 100);
+  observeReveals(targetTab);
+  document.dispatchEvent(new CustomEvent('tabchange', { detail: { tab } }));
 }
 
 
@@ -100,13 +119,6 @@ document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
 });
 
 
-// Check URL hash on load (activate requested tab if present)
-const hash = window.location.hash.slice(1);
-if (hash) {
-  const el = document.getElementById(hash + '-tab');
-  if (el) switchTab(hash);
-}
-
 // Reveal animation (observe all .reveal elements) - optimized with rootMargin
 const observer = new IntersectionObserver(
   (entries) => {
@@ -121,6 +133,13 @@ const observer = new IntersectionObserver(
 );
 
 document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+// Check URL hash on load (activate requested tab if present)
+const hash = window.location.hash.slice(1);
+if (hash) {
+  const el = document.getElementById(hash + '-tab');
+  if (el) switchTab(hash);
+}
 
 // Mobile menu functionality
 (function() {
@@ -192,6 +211,7 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
   const listEl   = document.getElementById('reviews-list');
   const ratingEl = document.getElementById('rating');
   let currentRating = 5;
+  let reviewsLoaded = false;
   const OWN_KEY = 'diversion_own_reviews';
 
   // ── Eigene Review-IDs aus localStorage ──────────────────
@@ -216,12 +236,10 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     'ficker','verdammt','mist','idiot','dummkopf'
   ];
   function escapeRegExp(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  const PROFANITY_PATTERN = new RegExp('\\b(' + PROFANITY.map(escapeRegExp).join('|') + ')\\b', 'i');
   function containsProfanity(text) {
     if (!text) return false;
-    for (const w of PROFANITY) {
-      if (new RegExp('\\b' + escapeRegExp(w) + '\\b', 'i').test(text)) return true;
-    }
-    return false;
+    return PROFANITY_PATTERN.test(text);
   }
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, c =>
@@ -242,33 +260,40 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
   // ── Review löschen ───────────────────────────────────────
   async function deleteReview(id) {
     if (!confirm('Delete your review?')) return;
+    const supabase = await getSupabase();
     const { error } = await supabase.from('reviews').delete().eq('id', id);
     if (error) { alert('Could not delete review. Please try again.'); return; }
     removeOwnId(id);
-    loadAndRender();
+    loadAndRender({ force: true });
   }
 
   // ── Reviews laden & anzeigen ─────────────────────────────
-  async function loadAndRender() {
-    if (!listEl) return;
+  async function loadAndRender({ force = false } = {}) {
+    if (!listEl || (reviewsLoaded && !force)) return;
     listEl.innerHTML = '<div style="color:var(--muted);">Loading reviews…</div>';
 
+    const supabase = await getSupabase();
     const { data, error } = await supabase
       .from('reviews')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .select('id,name,rating,comment,created_at')
+      .order('rating', { ascending: false })
+      .order('created_at', { ascending: false })
+      .limit(24);
 
     if (error || !data) {
+      reviewsLoaded = false;
       listEl.innerHTML = '<div style="color:var(--muted);">Could not load reviews.</div>';
       return;
     }
     if (data.length === 0) {
+      reviewsLoaded = true;
       listEl.innerHTML = '<div style="color:var(--muted);">No reviews yet — be the first to leave one!</div>';
       return;
     }
 
     const ownIds = getOwnIds();
     listEl.innerHTML = '';
+    const fragment = document.createDocumentFragment();
 
     data.forEach(r => {
       const card = document.createElement('article');
@@ -299,9 +324,11 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
         card.querySelector('.review-delete').addEventListener('click', () => deleteReview(r.id));
       }
 
-      listEl.appendChild(card);
+      fragment.appendChild(card);
       if (typeof observer !== 'undefined') observer.observe(card);
     });
+    listEl.appendChild(fragment);
+    reviewsLoaded = true;
   }
 
   // ── Stern-Bewertung UI ───────────────────────────────────
@@ -337,6 +364,7 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
       const btn = form.querySelector('[type="submit"]');
       if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
 
+      const supabase = await getSupabase();
       const { data: inserted, error } = await supabase
         .from('reviews')
         .insert({ name, rating: currentRating, comment })
@@ -359,12 +387,18 @@ document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
       if (ratingEl) ratingEl.querySelectorAll('.star').forEach(s =>
         s.classList.toggle('selected', Number(s.dataset.value) <= currentRating));
 
-      loadAndRender();
+      loadAndRender({ force: true });
     });
   }
 
   // ── Beim Laden starten ───────────────────────────────────
-  document.addEventListener('DOMContentLoaded', loadAndRender);
+  document.addEventListener('tabchange', (event) => {
+    if (event.detail?.tab === 'reviews') loadAndRender();
+  });
+
+  if (document.getElementById('reviews-tab')?.classList.contains('active')) {
+    loadAndRender();
+  }
 })();
 
 // ── Footer tab links ─────────────────────────────────────
